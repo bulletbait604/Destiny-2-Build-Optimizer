@@ -45,7 +45,10 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
               cursor: 'pointer',
               transition: 'all 0.3s ease'
             }}
-            onClick={() => onClassSelect(guardian.id as 'hunter' | 'warlock' | 'titan')}
+            onClick={() => {
+              console.log('Guardian clicked:', guardian.id);
+              onClassSelect(guardian.id as 'hunter' | 'warlock' | 'titan');
+            }}
             onMouseEnter={(e) => {
               e.currentTarget.style.borderColor = 'rgba(0,255,136,0.6)';
               e.currentTarget.style.transform = 'translateY(-4px)';
@@ -90,6 +93,11 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
                   transition: 'all 0.2s ease',
                   border: 'none',
                   fontSize: '1rem'
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  console.log('Button clicked:', guardian.id);
+                  onClassSelect(guardian.id as 'hunter' | 'warlock' | 'titan');
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'linear-gradient(135deg, #00cc6a, #a0a0a0, #ccaa00)';

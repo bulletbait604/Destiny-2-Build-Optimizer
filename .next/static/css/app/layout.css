@@ -22,9 +22,52 @@ html, body {
 }
 
 body {
-  background: linear-gradient(135deg, #064e3b 0%, #000000 50%, #1f2937 100%);
+  background: linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #1a1a1a 50%, #0f0f0f 75%, #000000 100%);
   color: white;
   min-height: 100vh;
+}
+
+/* Destiny 2 Animations */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotateX(0deg); }
+  50% { transform: translateY(-10px) rotateX(2deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 0 30px rgba(0,255,136,0.6);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(0,255,136,0.8);
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(0,255,136,0.4);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(0,255,136,0.8);
+  }
 }
 
 /* Custom components */
@@ -71,5 +114,14 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+/* Destiny 2 specific styles */
+.destiny-logo {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.destiny-title {
+  animation: gradient 3s ease infinite, float 3s ease-in-out infinite;
 }
 
