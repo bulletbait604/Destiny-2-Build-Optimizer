@@ -28,7 +28,7 @@ interface ClassSelectorProps {
 export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
   return (
     <div style={{ padding: '2rem 0' }}>
-      <h2 style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center', color: '#4ade80', marginBottom: '2rem' }}>
+      <h2 style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center', color: '#00ff88', marginBottom: '2rem' }}>
         Choose Your Guardian
       </h2>
       
@@ -37,9 +37,9 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
           <div 
             key={guardian.id}
             style={{ 
-              background: 'linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.6))', 
+              background: 'linear-gradient(135deg, rgba(0,0,0,0.6), rgba(10,10,10,0.8))', 
               backdropFilter: 'blur(10px)',
-              border: '2px solid rgba(34, 197, 94, 0.3)',
+              border: '2px solid rgba(0,255,136,0.3)',
               padding: '2rem',
               borderRadius: '0.75rem',
               cursor: 'pointer',
@@ -47,12 +47,12 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
             }}
             onClick={() => onClassSelect(guardian.id as 'hunter' | 'warlock' | 'titan')}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.5)';
+              e.currentTarget.style.borderColor = 'rgba(0,255,136,0.6)';
               e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(34, 197, 94, 0.2)';
+              e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0,255,136,0.3)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+              e.currentTarget.style.borderColor = 'rgba(0,255,136,0.3)';
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.boxShadow = 'none';
             }}
@@ -62,25 +62,26 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
                 width: '8rem', 
                 height: '8rem', 
                 margin: '0 auto 1.5rem', 
-                background: 'linear-gradient(135deg, #374151, #1f2937)', 
+                background: 'linear-gradient(135deg, #1a1a1a, #2a2a2a)', 
                 borderRadius: '50%', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                border: '2px solid #c0c0c0'
               }}>
                 <span style={{ fontSize: '3rem' }}>{guardian.emoji}</span>
               </div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#4ade80', marginBottom: '0.75rem' }}>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#00ff88', marginBottom: '0.75rem' }}>
                 {guardian.title}
               </h3>
-              <p style={{ color: '#d1d5db', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: '1.5' }}>
+              <p style={{ color: '#c0c0c0', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: '1.5' }}>
                 {guardian.description}
               </p>
               <button 
                 style={{ 
                   width: '100%',
-                  background: 'linear-gradient(135deg, #16a34a, #22c55e)', 
+                  background: 'linear-gradient(135deg, #00ff88, #c0c0c0, #ffd700)', 
                   color: 'black', 
                   fontWeight: 'bold', 
                   padding: '0.75rem 1.5rem', 
@@ -91,11 +92,11 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
                   fontSize: '1rem'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #00cc6a, #a0a0a0, #ccaa00)';
                   e.currentTarget.style.transform = 'translateY(-1px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #16a34a, #22c55e)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #00ff88, #c0c0c0, #ffd700)';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
