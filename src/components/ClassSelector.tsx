@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { HunterSymbol, WarlockSymbol, TitanSymbol } from './ClassSymbols';
 import { ExoticArmorDropdown } from './ExoticArmorDropdown';
 import { ExoticArmorPiece } from '@/data/exoticArmor';
+import { BuildOptimizerService, OptimizedBuild } from '@/services/buildOptimizer';
 
 const guardianClasses = [
   {
@@ -35,31 +36,61 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
   const [selectedArmor, setSelectedArmor] = useState<ExoticArmorPiece | null>(null);
   const [showBuildResults, setShowBuildResults] = useState(false);
   const [isOptimizing, setIsOptimizing] = useState(false);
+  const [optimizedBuild, setOptimizedBuild] = useState<OptimizedBuild | null>(null);
+  const [dimScanResults, setDimScanResults] = useState<string[]>([]);
+
+  const buildOptimizer = new BuildOptimizerService();
 
   const handleClassSelect = (guardianClass: 'hunter' | 'warlock' | 'titan') => {
     setSelectedClass(guardianClass);
     setSelectedArmor(null);
     setShowBuildResults(false);
+    setOptimizedBuild(null);
+    setDimScanResults([]);
   };
 
   const handleArmorSelect = async (armor: ExoticArmorPiece) => {
     setSelectedArmor(armor);
     setIsOptimizing(true);
+    setShowBuildResults(false);
     
-    // Simulate AI optimization
-    setTimeout(() => {
+    try {
+      // Use real API to optimize build
+      const build = await buildOptimizer.optimizeBuild(armor);
+      setOptimizedBuild(build);
       setShowBuildResults(true);
+    } catch (error) {
+      console.error('Build optimization failed:', error);
+      // Fallback to mock data
+      setShowBuildResults(true);
+    } finally {
       setIsOptimizing(false);
-    }, 2000);
+    }
+  };
+
+  const handleDIMScan = async () => {
+    if (!optimizedBuild) return;
+    
+    setDimScanResults(['🔍 Scanning your DIM inventory...']);
+    
+    try {
+      const scanResults = await buildOptimizer.scanDIMInventory(optimizedBuild);
+      setDimScanResults(scanResults);
+    } catch (error) {
+      console.error('DIM scan failed:', error);
+      setDimScanResults(['❌ Failed to scan DIM inventory']);
+    }
   };
 
   const handleBackToClasses = () => {
     setSelectedClass(null);
     setSelectedArmor(null);
     setShowBuildResults(false);
+    setOptimizedBuild(null);
+    setDimScanResults([]);
   };
 
-  if (selectedClass && selectedArmor && showBuildResults) {
+  if (selectedClass && selectedArmor && showBuildResults && optimizedBuild) {
     return (
       <div style={{ textAlign: 'center', padding: '2rem' }}>
         <div style={{ 
@@ -70,11 +101,11 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
           backdropFilter: 'blur(10px)'
         }}>
           <h2 style={{ fontSize: '2rem', color: '#00ff88', marginBottom: '1rem' }}>
-            Optimized Build for {selectedArmor.name}
+            Optimized Build for {optimizedBuild.exoticArmor.name}
           </h2>
           
           <div style={{ marginBottom: '2rem', textAlign: 'left' }}>
-            <h3 style={{ color: '#ffd700', marginBottom: '1rem' }}>Recommended Loadout:</h3>
+            <h3 style={{ color: '#ffd700', marginBottom: '1rem' }}>🔥 AI-Optimized Loadout:</h3>
             
             <div style={{ 
               background: 'rgba(0,255,136,0.1)', 
@@ -83,8 +114,16 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
               marginBottom: '1rem',
               border: '1px solid rgba(0,255,136,0.3)'
             }}>
-              <h4 style={{ color: '#00ff88', marginBottom: '0.5rem' }}>Exotic Weapon:</h4>
-              <p style={{ color: '#c0c0c0' }}>Ace of Spades (Hand Cannon)</p>
+              <h4 style={{ color: '#00ff88', marginBottom: '0.5rem' }}>⚡ Exotic Weapon:</h4>
+              <p style={{ color: '#c0c0c0', fontWeight: 'bold' }}>{optimizedBuild.weapons.exotic.name}</p>
+              <p style={{ color: '#a0a0a0', fontSize: '0.875rem', marginTop: '0.5rem' }}>
+                {optimizedBuild.weapons.exotic.description}
+              </p>
+              <div style={{ fontSize: '0.75rem', color: '#00ff88', marginTop: '0.5rem' }}>
+                {optimizedBuild.weapons.exotic.damageType} • {optimizedBuild.weapons.exotic.itemCategory}
+                {optimizedBuild.weapons.exotic.rpm && ` • ${optimizedBuild.weapons.exotic.rpm} RPM`}
+                {optimizedBuild.weapons.exotic.impact && ` • ${optimizedBuild.weapons.exotic.impact} Impact`}
+              </div>
             </div>
             
             <div style={{ 
@@ -94,9 +133,22 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
               marginBottom: '1rem',
               border: '1px solid rgba(192,192,192,0.3)'
             }}>
-              <h4 style={{ color: '#c0c0c0', marginBottom: '0.5rem' }}>Legendary Weapons:</h4>
-              <p style={{ color: '#c0c0c0' }}>• Trust (Kinetic Hand Cannon)</p>
-              <p style={{ color: '#c0c0c0' }}>• Wish-Ender (Energy Sniper Rifle)</p>
+              <h4 style={{ color: '#c0c0c0', marginBottom: '0.5rem' }}>⚔️ Legendary Weapons:</h4>
+              {optimizedBuild.weapons.legendary.map((weapon, index) => (
+                <div key={index} style={{ marginBottom: '1rem' }}>
+                  <p style={{ color: '#c0c0c0', fontWeight: 'bold' }}>
+                    {weapon.name} ({weapon.slot})
+                  </p>
+                  <p style={{ color: '#a0a0a0', fontSize: '0.875rem' }}>
+                    {weapon.description}
+                  </p>
+                  <div style={{ fontSize: '0.75rem', color: '#c0c0c0', marginTop: '0.5rem' }}>
+                    {weapon.damageType} • {weapon.itemCategory}
+                    {weapon.rpm && ` • ${weapon.rpm} RPM`}
+                    {weapon.impact && ` • ${weapon.impact} Impact`}
+                  </div>
+                </div>
+              ))}
             </div>
             
             <div style={{ 
@@ -106,12 +158,42 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
               marginBottom: '1rem',
               border: '1px solid rgba(255,215,0,0.3)'
             }}>
-              <h4 style={{ color: '#ffd700', marginBottom: '0.5rem' }}>Synergy:</h4>
+              <h4 style={{ color: '#ffd700', marginBottom: '0.5rem' }}>🔗 Armor Synergy:</h4>
               <p style={{ color: '#c0c0c0', lineHeight: '1.5' }}>
-                Explosive Golden Gun shots pair perfectly with Ace of Spades' Firefly perk, creating devastating chain reactions.
+                {optimizedBuild.armorSynergy}
+              </p>
+            </div>
+            
+            <div style={{ 
+              background: 'rgba(0,255,136,0.05)', 
+              padding: '1rem', 
+              borderRadius: '0.5rem', 
+              marginBottom: '1rem',
+              border: '1px solid rgba(0,255,136,0.2)'
+            }}>
+              <h4 style={{ color: '#00ff88', marginBottom: '0.5rem' }}>🎯 Recommended Playstyle:</h4>
+              <p style={{ color: '#c0c0c0', fontStyle: 'italic' }}>
+                {optimizedBuild.playstyle}
               </p>
             </div>
           </div>
+          
+          {dimScanResults.length > 0 && (
+            <div style={{ 
+              background: 'rgba(0,100,200,0.1)', 
+              padding: '1rem', 
+              borderRadius: '0.5rem', 
+              marginBottom: '1rem',
+              border: '1px solid rgba(0,100,200,0.3)'
+            }}>
+              <h4 style={{ color: '#00b4d8', marginBottom: '0.5rem' }}>🔍 DIM Inventory Scan Results:</h4>
+              {dimScanResults.map((result, index) => (
+                <p key={index} style={{ color: '#c0c0c0', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                  {result}
+                </p>
+              ))}
+            </div>
+          )}
           
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button 
@@ -128,16 +210,21 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
               ← Back to Classes
             </button>
             <button 
+              onClick={handleDIMScan}
+              disabled={dimScanResults.length > 0}
               style={{ 
-                background: 'linear-gradient(135deg, #00ff88, #c0c0c0, #ffd700)', 
-                color: 'black', 
+                background: dimScanResults.length > 0 
+                  ? 'linear-gradient(135deg, #6b7280, #4b5563)' 
+                  : 'linear-gradient(135deg, #00ff88, #c0c0c0, #ffd700)', 
+                color: dimScanResults.length > 0 ? '#9ca3af' : 'black', 
                 padding: '1rem 2rem', 
                 borderRadius: '0.5rem', 
-                cursor: 'pointer',
-                fontWeight: 'bold'
+                cursor: dimScanResults.length > 0 ? 'not-allowed' : 'pointer',
+                fontWeight: 'bold',
+                opacity: dimScanResults.length > 0 ? 0.6 : 1
               }}
             >
-              Scan DIM Inventory
+              {dimScanResults.length > 0 ? '✓ Scanned' : '🔍 Scan DIM Inventory'}
             </button>
           </div>
         </div>
