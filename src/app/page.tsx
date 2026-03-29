@@ -12,42 +12,42 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-900 via-black to-gray-900 text-white">
-      <div className="container mx-auto px-4 py-8">
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #064e3b 0%, #000000 50%, #1f2937 100%)', color: 'white' }}>
+      <div style={{ padding: '2rem 1rem' }}>
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-green-400 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <h1 style={{ fontSize: '3.5rem', fontWeight: 'bold', marginBottom: '1rem', background: 'linear-gradient(135deg, #4ade80, #eab308, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
             Destiny 2 Build Optimizer
           </h1>
-          <p className="text-gray-300 text-lg">
+          <p style={{ color: '#d1d5db', fontSize: '1.125rem' }}>
             AI-Powered Build Optimization with Exotic Armor Synergy
           </p>
         </div>
 
         {/* Main Content */}
-        <div className="max-w-6xl mx-auto">
+        <div style={{ maxWidth: '96rem', margin: '0 auto' }}>
           {selectedClass ? (
-            <div className="text-center bg-black/40 backdrop-blur-sm rounded-2xl p-12 border border-green-500/30">
-              <div className="w-24 h-24 mx-auto bg-gray-700 rounded-full mb-6 flex items-center justify-center">
-                <span className="text-5xl">
+            <div style={{ textAlign: 'center', padding: '3rem', background: 'linear-gradient(135deg, #374151, #1f2937)', borderRadius: '1rem', backdropFilter: 'blur(10px)' }}>
+              <div style={{ width: '6rem', height: '6rem', margin: '0 auto 1.5rem', background: 'linear-gradient(135deg, #374151, #1f2937)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ fontSize: '3rem' }}>
                   {selectedClass === 'hunter' ? '🏹' : selectedClass === 'warlock' ? '🔮' : '🛡️'}
                 </span>
               </div>
-              <h2 className="text-4xl font-bold text-green-400 mb-4 capitalize">
+              <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#4ade80', marginBottom: '1rem', textTransform: 'capitalize' }}>
                 {selectedClass} Selected!
               </h2>
-              <p className="text-gray-300 mb-8 text-lg">
+              <p style={{ color: '#d1d5db', marginBottom: '2rem', fontSize: '1.125rem' }}>
                 Build optimization features coming soon...
               </p>
-              <div className="space-x-4">
+              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <button 
                   onClick={() => setSelectedClass(null)}
-                  className="bg-gray-600 hover:bg-gray-500 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105"
+                  style={{ background: 'linear-gradient(135deg, #4b5563, #6b7280)', color: 'white', padding: '1rem 2rem', borderRadius: '0.5rem', cursor: 'pointer' }}
                 >
                   ← Back to Class Selection
                 </button>
                 <button 
-                  className="bg-green-600 hover:bg-green-500 text-black font-semibold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105"
+                  style={{ background: 'linear-gradient(135deg, #4ade80, #eab308, #f97316)', color: 'black', padding: '1rem 2rem', borderRadius: '0.5rem', cursor: 'pointer' }}
                 >
                   Continue to Build Optimizer →
                 </button>
@@ -59,7 +59,7 @@ export default function HomePage() {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-16 text-gray-400">
+        <div style={{ textAlign: 'center', marginTop: '4rem', color: '#9ca3af' }}>
           <p>Destiny 2 Build Optimizer - Choose Your Guardian Class</p>
         </div>
       </div>
