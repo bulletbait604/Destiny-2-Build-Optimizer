@@ -26,6 +26,11 @@ interface ClassSelectorProps {
 }
 
 export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
+  const handleCardClick = (guardianClass: 'hunter' | 'warlock' | 'titan') => {
+    console.log('Card clicked:', guardianClass);
+    onClassSelect(guardianClass);
+  };
+
   return (
     <div style={{ padding: '2rem 0' }}>
       <h2 style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center', color: '#00ff88', marginBottom: '2rem' }}>
@@ -45,10 +50,7 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
               cursor: 'pointer',
               transition: 'all 0.3s ease'
             }}
-            onClick={() => {
-              console.log('Guardian clicked:', guardian.id);
-              onClassSelect(guardian.id as 'hunter' | 'warlock' | 'titan');
-            }}
+            onClick={() => handleCardClick(guardian.id as 'hunter' | 'warlock' | 'titan')}
             onMouseEnter={(e) => {
               e.currentTarget.style.borderColor = 'rgba(0,255,136,0.6)';
               e.currentTarget.style.transform = 'translateY(-4px)';
@@ -96,8 +98,7 @@ export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
-                  console.log('Button clicked:', guardian.id);
-                  onClassSelect(guardian.id as 'hunter' | 'warlock' | 'titan');
+                  handleCardClick(guardian.id as 'hunter' | 'warlock' | 'titan');
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'linear-gradient(135deg, #00cc6a, #a0a0a0, #ccaa00)';

@@ -16,55 +16,10 @@ export default function HomePage() {
       <div style={{ padding: '2rem 1rem' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <div style={{ 
-            display: 'inline-block',
-            perspective: '1000px',
-            marginBottom: '1rem'
-          }}>
-            <h1 style={{ 
-              fontSize: '4rem', 
-              fontWeight: 'bold', 
-              background: 'linear-gradient(135deg, #00ff88, #c0c0c0, #ffd700, #00ff88)',
-              backgroundSize: '200% 200%',
-              WebkitBackgroundClip: 'text', 
-              WebkitTextFillColor: 'transparent', 
-              backgroundClip: 'text',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              textShadow: '0 0 20px rgba(0,255,136,0.5)',
-              animation: 'gradient 3s ease infinite, float 3s ease-in-out infinite',
-              transformStyle: 'preserve-3d',
-              position: 'relative'
-            }}>
-              <span style={{ 
-                display: 'block',
-                transform: 'translateZ(20px)',
-                position: 'relative'
-              }}>
-                Destiny 2
-              </span>
-              <span style={{ 
-                display: 'block',
-                fontSize: '2rem',
-                marginTop: '0.5rem',
-                transform: 'translateZ(10px)',
-                position: 'relative',
-                background: 'linear-gradient(135deg, #ffd700, #c0c0c0, #00ff88)',
-                backgroundSize: '200% 200%',
-                WebkitBackgroundClip: 'text', 
-                WebkitTextFillColor: 'transparent', 
-                backgroundClip: 'text',
-                animation: 'gradient 3s ease infinite reverse'
-              }}>
-                Build Optimizer
-              </span>
-            </h1>
-          </div>
-          
           {/* Destiny 2 style icon */}
           <div style={{ 
-            width: '80px',
-            height: '80px',
+            width: '100px',
+            height: '100px',
             margin: '0 auto 1rem',
             background: 'linear-gradient(135deg, #00ff88, #00cc6a)',
             borderRadius: '50%',
@@ -76,20 +31,37 @@ export default function HomePage() {
             boxShadow: '0 0 30px rgba(0,255,136,0.6)'
           }}>
             <div style={{
-              width: '60px',
-              height: '60px',
+              width: '80px',
+              height: '80px',
               background: '#000',
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '1.5rem',
+              fontSize: '2rem',
               fontWeight: 'bold',
               color: '#00ff88'
             }}>
               D2
             </div>
           </div>
+          
+          <h1 style={{ 
+            fontSize: '3.5rem', 
+            fontWeight: 'bold', 
+            marginBottom: '1rem', 
+            background: 'linear-gradient(135deg, #00ff88, #c0c0c0, #ffd700)',
+            backgroundSize: '200% 200%',
+            WebkitBackgroundClip: 'text', 
+            WebkitTextFillColor: 'transparent', 
+            backgroundClip: 'text',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+            textShadow: '0 0 20px rgba(0,255,136,0.5)',
+            animation: 'gradient 3s ease infinite'
+          }}>
+            Destiny 2 Build Optimizer
+          </h1>
           
           <p style={{ 
             color: '#c0c0c0', 
