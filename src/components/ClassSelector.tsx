@@ -1,62 +1,57 @@
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+const guardianClasses = [
+  {
+    id: 'hunter',
+    emoji: '🏹',
+    title: 'Hunter',
+    description: 'Master of void, precision, and agility'
+  },
+  {
+    id: 'warlock', 
+    emoji: '🔮',
+    title: 'Warlock',
+    description: 'Wielder of cosmic Light and arcane power'
+  },
+  {
+    id: 'titan',
+    emoji: '🛡️',
+    title: 'Titan', 
+    description: 'Unstoppable force of resilience and strength'
+  }
+]
 
 interface ClassSelectorProps {
   onClassSelect: (guardianClass: 'hunter' | 'warlock' | 'titan') => void
 }
 
-const guardianImages = {
-  hunter: '/guardians/hunter.jpg',
-  warlock: '/guardians/warlock.jpg',
-  titan: '/guardians/titan.jpg'
-}
-
-const classDescriptions = {
-  hunter: 'Master the void with precision and agility',
-  warlock: 'Wield the cosmic power of the Light',
-  titan: 'Unleash devastating strength and resilience'
-}
-
 export function ClassSelector({ onClassSelect }: ClassSelectorProps) {
   return (
-    <div className="space-y-6">
-      <h2 className="text-3xl font-bold text-center mb-8 text-green-400">
-            Choose Your Guardian
-          </h2>
+    <div className="space-y-8">
+      <h2 className="text-3xl font-bold text-center text-green-400">
+        Choose Your Guardian
+      </h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-        {Object.entries(guardianImages).map(([guardianClass, imagePath]) => (
-          <Card 
-            key={guardianClass}
-            className="bg-black/50 border-green-500/30 hover:border-green-400/50 transition-all duration-300 cursor-pointer group"
-            onClick={() => onClassSelect(guardianClass as 'hunter' | 'warlock' | 'titan')}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        {guardianClasses.map((guardian) => (
+          <div 
+            key={guardian.id}
+            className="bg-black/40 backdrop-blur-sm border-2 border-green-500/30 p-8 rounded-xl hover:border-green-400/50 transition-all duration-300 cursor-pointer group transform hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20"
+            onClick={() => onClassSelect(guardian.id as 'hunter' | 'warlock' | 'titan')}
           >
-            <CardHeader className="text-center">
-              <div className="relative overflow-hidden rounded-lg mb-4">
-                    <img 
-                      src={imagePath}
-                      alt={`${guardianClass} guardian`}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <div className="text-center">
+              <div className="w-32 h-32 mx-auto bg-gradient-to-br from-gray-700 to-gray-800 rounded-full mb-6 flex items-center justify-center group-hover:from-green-600 group-hover:to-green-700 transition-all duration-300">
+                <span className="text-5xl transform group-hover:scale-110 transition-transform duration-300">{guardian.emoji}</span>
               </div>
-              <CardTitle className="text-2xl font-bold text-green-400 capitalize">
-                        {guardianClass}
-                      </CardTitle>
-            </CardHeader>
-            <CardContent className="text-center">
-              <CardDescription className="text-gray-300 text-sm">
-                        {classDescriptions[guardianClass as keyof typeof classDescriptions]}
-                      </CardDescription>
-              <Button 
-                className="w-full mt-4 bg-green-600 hover:bg-green-500 text-black font-semibold"
+              <h3 className="text-2xl font-bold text-green-400 mb-3">{guardian.title}</h3>
+              <p className="text-gray-300 text-sm mb-6 leading-relaxed">{guardian.description}</p>
+              <button 
+                className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-black font-bold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg"
               >
-                Select {guardianClass}
-              </Button>
-            </CardContent>
-          </Card>
+                Select {guardian.title}
+              </button>
+            </div>
+          </div>
         ))}
       </div>
     </div>
